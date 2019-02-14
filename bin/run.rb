@@ -3,6 +3,7 @@ require_relative '../lib/models/user.rb'
 require_relative '../lib/models/review.rb'
 require_relative '../lib/models/wine.rb'
 require_relative 'cli.rb'
+require 'colorize'
 
 
 

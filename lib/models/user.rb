@@ -131,11 +131,6 @@ class User < ActiveRecord::Base
         else
             puts "That ID number does not match?!"
         end
-
-        # puts "change your rating:"
-        # input2 = gets.chomp
-        # reviews.update(rating: input2)
-
         reviews.find_by(wine_id: input)
         second_menu(self)
     end
