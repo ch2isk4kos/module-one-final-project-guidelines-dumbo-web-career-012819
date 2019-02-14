@@ -94,6 +94,7 @@ class User < ActiveRecord::Base
             puts "Name: #{t.wine.name}"
             puts "Content: #{t.content}"
             puts "Rating: #{t.rating}"
+            puts "ID: #{t.wine_id}"
             puts "------------"
             # puts t.rating
             end
@@ -118,14 +119,24 @@ class User < ActiveRecord::Base
     end
 
     def update_review
-        sleep(0.5)
-        puts "change your content:"
+        puts "Enter Wine ID Number to Update"
         input = gets.chomp
-        reviews.update(content: input)
-        puts "change your rating:"
-        input2 = gets.chomp
-        reviews.update(rating: input2)
+        if self.reviews.select {|t| t.wine_id == input}
+            puts "how would you like to change content?"
+            input2 = gets.chomp
+            puts "how about rating"
+            input3 = gets.chomp
+            # binding.pry
+        reviews.find_by(wine_id: input).update(content: input2, rating: input3)
+        else
+            puts "That ID number does not match?!"
+        end
 
+        # puts "change your rating:"
+        # input2 = gets.chomp
+        # reviews.update(rating: input2)
+
+        reviews.find_by(wine_id: input)
         second_menu(self)
     end
 
