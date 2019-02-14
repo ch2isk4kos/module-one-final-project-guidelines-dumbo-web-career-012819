@@ -5,6 +5,7 @@ require_relative '../lib/models/wine.rb'
 require_relative 'cli.rb'
 
 
+
 # puts "HELLO WORLD"
 
 # bob = User.create(name: "Bob Parker")
@@ -21,7 +22,11 @@ require_relative 'cli.rb'
 # run
 
 greeting
-main_menu
+
+
+first_menu
+
+
 
 # binding.pry
 # 0

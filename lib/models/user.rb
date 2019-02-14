@@ -15,16 +15,30 @@ class User < ActiveRecord::Base
     #     puts "Welcome to the Cruddy Wine App!"
     # end
     #
+    def self.check_user(user)
+        User.find_by(name: user)
+    end
 
     def self.create_user
         sleep(0.5)
         puts "What's your name?"
         input = gets.chomp
 
-        self.find_or_create_by(name: input)
-        puts "Nice to Meet You #{input}"
+        if check_user(input)
+            puts "Welcome Back #{input}"
 
-        main_menu
+            User.find_by(name: input)
+
+        else
+            puts "whats your email?"
+            input2 = gets.chomp
+            puts "Nice to meet you #{input}"
+
+            User.create(name: input, email: input2)
+        end
+
+
+
     end
 
     def create_review
@@ -61,26 +75,34 @@ class User < ActiveRecord::Base
             Review.create(content: input1, rating: input6, wine_id: Wine.last.id, user_id: self.id)
         end
 
-        main_menu
+        second_menu(self)
     end
 
     def self.retrieve_user
         sleep(0.5)
         puts "couple glasses in? we gotchu... #{self.name}"
 
-        main_menu
+        second_menu(self)
     end
+
 
     def retrieve_reviews
-        if self.reviews == nil
-            create_review
+        if  reviews.count == 0
+            puts "you have no reviews!?"
         else
-            puts "#{self.reviews}"
+            self.reviews.all.each do |t|
+            puts "Name: #{t.wine.name}"
+            puts "Content: #{t.content}"
+            puts "Rating: #{t.rating}"
+            puts "------------"
+            # puts t.rating
+            end
         end
 
-        main_menu
+        second_menu(self)
     end
-    # binding.pry
+
+
     # 0
 
     def update_user
@@ -92,7 +114,7 @@ class User < ActiveRecord::Base
 
         self.update(name: input)
 
-        main_menu
+        second_menu(self)
     end
 
     def update_review
@@ -104,7 +126,7 @@ class User < ActiveRecord::Base
         input2 = gets.chomp
         reviews.update(rating: input2)
 
-        main_menu
+        second_menu(self)
     end
 
     def delete_user
@@ -118,8 +140,8 @@ class User < ActiveRecord::Base
          else
              puts "I don't understand why you are doing this to me?!"
          end
-         
-         main_menu
+
+         second_menu(self)
      end
 
  end

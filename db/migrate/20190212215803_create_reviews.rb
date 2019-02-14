@@ -10,17 +10,17 @@ class CreateReviews < ActiveRecord::Migration[5.0]
         end
     end
 
-    def create_review
-        sleep(0.5)
-        puts "What's the name of your wine?"
-        input = gets.chomp
-        puts "What would you want to say about it?"
-        input2 = gets.chomp
-        puts "how would you rate from 1 to 10"
-        input3 = gets.chomp
-
-        
-    end
+    # def create_review
+    #     sleep(0.5)
+    #     puts "What's the name of your wine?"
+    #     input = gets.chomp
+    #     puts "What would you want to say about it?"
+    #     input2 = gets.chomp
+    #     puts "how would you rate from 1 to 10"
+    #     input3 = gets.chomp
+    #
+    #
+    # end
 
 
 
