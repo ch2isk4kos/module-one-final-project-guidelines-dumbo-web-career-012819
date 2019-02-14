@@ -1,9 +1,9 @@
-USER    	--<-    		REVIEW               ->--    	WINES
-* name             		   * content			            * name
-                     	   * rating			                * type
-                    	   * user_id			            * year
-                    	   * wine_id     			        * origin
-                                       					    * color
+USER   --<-    	REVIEW      ->--   WINES
+* name          * content		   * name
+                * rating		   * type
+                * user_id		   * year
+                * wine_id          * origin
+                                   * color
 
 - USER:
 
