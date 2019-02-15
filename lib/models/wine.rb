@@ -9,5 +9,12 @@ class Wine < ActiveRecord::Base
         #         review.wine_id == self.id
         #     end
         # end
+        def self.get_list_of_wines
+            self.all.map{|wine| puts "#{wine.name}"}
 
-end
+        end
+
+
+
+
+    end

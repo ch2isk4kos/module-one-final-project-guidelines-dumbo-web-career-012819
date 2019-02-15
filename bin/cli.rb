@@ -12,7 +12,6 @@ ActiveSupport::Deprecation.silenced = true
 
 
 
-
 #----------------- Welcomes User --------------------#
 def greeting
 
@@ -49,7 +48,7 @@ end
 
 #------------------- Exit Program -----------------------#
 def exit_program
-
+    exit
 end
 
 
@@ -63,6 +62,8 @@ def first_menu
     prompt = TTY::Prompt.new
     options = [
         {"My Reviews" => -> do current_user.retrieve_reviews end},
+        {"All Wines" => -> do Wine.get_list_of_wines end},
+        {"All Reviews" => -> do Review.get_list_of_reviews end},
         {"Create Reviews" => -> do current_user.create_review end},
         {"Update User" => -> do current_user.update_user end},
         {"Update Reviews" => -> do current_user.update_review end},
@@ -83,9 +84,12 @@ def second_menu(input_user, input_email)
     prompt = TTY::Prompt.new
     options = [
         {"My Reviews" => -> do current_user.retrieve_reviews end},
+        {"All Wines" => -> do Wine.get_list_of_wines end},
+        {"All Reviews" => -> do Review.get_list_of_reviews end},
         {"Create Reviews" => -> do current_user.create_review end},
-        {"Update User" => -> do current_user.update_user end},
         {"Update Reviews" => -> do current_user.update_review end},
+        {"Update User" => -> do current_user.update_user end},
+        {"Display User Info" => -> do current_user.retrieve_user end},
         {"Delete Account" => -> do current_user.delete_user end},
         {"Exit" => -> do exit_program end}
     ]

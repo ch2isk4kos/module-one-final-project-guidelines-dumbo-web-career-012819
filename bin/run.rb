@@ -34,6 +34,18 @@ greeting
 
 
 first_menu
+# def run
+#
+#     while
+#         != "exit"
+#
+#         greeting
+#         first_menu
+#
+#     end
+#
+#
+# end
 
 
 

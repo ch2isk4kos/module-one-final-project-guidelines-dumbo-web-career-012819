@@ -58,6 +58,13 @@ class User < ActiveRecord::Base
             puts "What year is it from?"
             input3 = gets.chomp
 
+            if input3.to_i >= Date.today.year
+                puts "Sorry! We don't accept wines from the future!"
+
+                second_menu(self.name, self.email)
+            else
+            end
+
             puts "Where did originate from?"
             input4 = gets.chomp
 
@@ -86,7 +93,7 @@ class User < ActiveRecord::Base
         ||
      ___||___
     /   ||   \
-    \________/'
+    \________/'.yellow
             Wine.create(name: input2, kind: input2b, year: input3, origin: input4, color: input5)
 
             Review.create(content: input1, rating: input6, wine_id: Wine.last.id, user_id: self.id)
@@ -95,9 +102,11 @@ class User < ActiveRecord::Base
         second_menu(self.name, self.email)
     end
 
-    def self.retrieve_user
+    def retrieve_user
         sleep(0.5)
-        puts "couple glasses in? we gotchu... #{self.name}"
+        puts "couple glasses in eh? we gotchu..."
+        sleep(0.3)
+        puts " Your Name: #{self.name}  Your Email: #{self.email}"
 
         second_menu(self.name, self.email)
     end
@@ -123,7 +132,7 @@ class User < ActiveRecord::Base
    V
    |
    |
-  ---'
+  ---'.yellow
             puts "Name: #{t.wine.name}"
             puts "Content: #{t.content}"
             puts "Rating: #{t.rating}"
@@ -137,9 +146,6 @@ class User < ActiveRecord::Base
         second_menu(self.name, self.email)
 
     end
-
-
-
 
     def update_user
         sleep(0.5)
@@ -163,14 +169,19 @@ class User < ActiveRecord::Base
             second_menu(self.name, self.email)
         end
 
+        self.reviews
+
         puts "Enter Wine ID Number to Update"
             input = gets.chomp
 
-        if self.reviews.select {|t| t.wine_id == input}
+
+# binding.pry
+        if Review.find_by(wine_id: input).user_id == self.reviews.all.find{|t| t.user_id == self.id}.user_id
             puts "how would you like to change content?"
             input2 = gets.chomp
             puts "how about rating"
             input3 = gets.chomp
+
             reviews.find_by(wine_id: input).update(content: input2, rating: input3)
         else
             puts "That ID number does not match?!"
@@ -182,11 +193,10 @@ class User < ActiveRecord::Base
 
     def delete_user
          sleep(0.5)
-         puts "Are you sure?"
+         puts "Are you sure? (yes/no)"
          input = gets.chop
          if input == "yes"
              puts '
-
 ────────────────██████████
 ────────────────██████████
 ────────────────██████████
@@ -208,6 +218,7 @@ class User < ActiveRecord::Base
          did I say something wrong?!
 '
              self.destroy
+             exit
          elsif input == "no"
              puts "phew!, please resume drinking"
          else
