@@ -3,9 +3,14 @@ require_relative '../lib/models/user.rb'
 require_relative '../lib/models/review.rb'
 require_relative '../lib/models/wine.rb'
 require_relative 'cli.rb'
+# require_relative 'active-record'
+# require_relative 'tty-prompt'
+# require_relative 'require_all'
+
+
 require 'colorize'
 
-
+# music = fork { exec 'afplay', "../sounds/11 - Fight Theme.mp3" }
 
 # puts "HELLO WORLD"
 
@@ -21,6 +26,9 @@ require 'colorize'
 # end
 #
 # run
+ music = fork{ exec 'afplay', "sounds/theme_song_for_wine.mp3" }
+
+
 
 greeting
 

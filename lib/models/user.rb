@@ -4,19 +4,9 @@ class User < ActiveRecord::Base
     has_many :wines, through: :reviews
 
 
-# has_many :reviews ==
-    # def reviews
-    #     Review.all.find do |review|
-    #         review.user_id == self.id
-    #     end
-    # end
 
-    # def greeting
-    #     puts "Welcome to the Cruddy Wine App!"
-    # end
-    #
-    def self.check_user(user)
-        User.find_by(name: user)
+    def self.check_user(user, email)
+        User.find_by(name: user, email: email)
     end
 
     def self.create_user
@@ -24,22 +14,26 @@ class User < ActiveRecord::Base
         puts "What's your name?"
         input = gets.chomp
 
-        if check_user(input)
+        puts "whats your email?"
+        input2 = gets.chomp
+
+        if check_user(input, input2)
+
             puts "Welcome Back #{input}"
 
-            User.find_by(name: input)
-
+            second_menu(input, input2)
         else
-            puts "whats your email?"
-            input2 = gets.chomp
             puts "Nice to meet you #{input}"
 
             User.create(name: input, email: input2)
+
         end
 
 
 
     end
+
+
 
     def create_review
         sleep(0.5)
@@ -70,41 +64,82 @@ class User < ActiveRecord::Base
             puts "Color?"
             input5 = gets.chomp
 
+            puts '*      *    .   *    .
+     ..  *    o
+   o   *  .    *
+     ________
+    (________)
+    |    o   |
+    | o    o |
+    |   o    |
+    | o    o |
+    | o  o   |
+    |      o |
+    ( o      )
+     \   o  /
+      \    /
+       \  /
+        ||
+        ||
+        ||
+        ||
+        ||
+     ___||___
+    /   ||   \
+    \________/'
             Wine.create(name: input2, kind: input2b, year: input3, origin: input4, color: input5)
 
             Review.create(content: input1, rating: input6, wine_id: Wine.last.id, user_id: self.id)
         end
 
-        second_menu(self)
+        second_menu(self.name, self.email)
     end
 
     def self.retrieve_user
         sleep(0.5)
         puts "couple glasses in? we gotchu... #{self.name}"
 
-        second_menu(self)
+        second_menu(self.name, self.email)
     end
 
 
     def retrieve_reviews
-        if  reviews.count == 0
+
+        if  self.reviews.all.count == 0
             puts "you have no reviews!?"
+
+            second_menu(self.name, self.email)
+
         else
             self.reviews.all.each do |t|
+
+            puts '   .
+  .
+ . .
+  ...
+\~~~~~/
+ \   /
+  \ /
+   V
+   |
+   |
+  ---'
             puts "Name: #{t.wine.name}"
             puts "Content: #{t.content}"
             puts "Rating: #{t.rating}"
             puts "ID: #{t.wine_id}"
             puts "------------"
             # puts t.rating
-            end
+        end.uniq
+
         end
 
-        second_menu(self)
+        second_menu(self.name, self.email)
+
     end
 
 
-    # 0
+
 
     def update_user
         sleep(0.5)
@@ -112,27 +147,37 @@ class User < ActiveRecord::Base
         # name = gets.chomp
         puts "What would you like to change your name to?"
         input = gets.chomp
+        puts "email?"
+        input1 = gets.chomp
 
-        self.update(name: input)
+        self.update(name: input, email: input1)
 
-        second_menu(self)
+        second_menu(self.name, self.email)
     end
 
     def update_review
+
+        if  self.reviews.all.count == 0
+            puts "you have no reviews!?"
+
+            second_menu(self.name, self.email)
+        end
+
         puts "Enter Wine ID Number to Update"
-        input = gets.chomp
+            input = gets.chomp
+
         if self.reviews.select {|t| t.wine_id == input}
             puts "how would you like to change content?"
             input2 = gets.chomp
             puts "how about rating"
             input3 = gets.chomp
-            # binding.pry
-        reviews.find_by(wine_id: input).update(content: input2, rating: input3)
+            reviews.find_by(wine_id: input).update(content: input2, rating: input3)
         else
             puts "That ID number does not match?!"
         end
+
         reviews.find_by(wine_id: input)
-        second_menu(self)
+        second_menu(self.name, self.email)
     end
 
     def delete_user
@@ -140,6 +185,28 @@ class User < ActiveRecord::Base
          puts "Are you sure?"
          input = gets.chop
          if input == "yes"
+             puts '
+
+────────────────██████████
+────────────────██████████
+────────────────██████████
+─────────────▄▄▄██████████▄▄▄
+───────────────▄▀░░░░░░░░▀▄
+──────────────▐░░░░░░░░░░░░▌
+──────────────▐░░███░░███░░▌
+──────────────▐░░ ░░▀▀░░ ░░▌
+──────────────▐░░ ░░░░░░░░░▌
+──────────────▐░░░▄▀▀▀▀▄░░░▌
+───────────────▀▄░░░▀▀░░░▄▀
+───────────────▐▒▀▄▄▄▄▄▄▀▒▌
+────────▄▄▄▄▄▄▀▀▒▓▓▓▓▓▓▓▓▒▀▀▄▄▄▄▄▄
+──────▄▀▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▀▄
+─────▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓
+────▓▒▒▒▒▒▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▓
+───▓▒▒▒▒▒▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▓
+──▓▒▒▒▒▒▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▓
+         did I say something wrong?!
+'
              self.destroy
          elsif input == "no"
              puts "phew!, please resume drinking"
@@ -147,7 +214,7 @@ class User < ActiveRecord::Base
              puts "I don't understand why you are doing this to me?!"
          end
 
-         second_menu(self)
+         first_menu
      end
 
  end

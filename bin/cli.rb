@@ -11,31 +11,35 @@ ActiveSupport::Deprecation.silenced = true
 
 
 
+
+
 #----------------- Welcomes User --------------------#
 def greeting
-    sleep(0.5)
+
+
+
+
+
+
     # prompt = TTY::Prompt.new
 
-sleep(0.3)
-puts " ▄████▄   ██▀███   █    ██ ▓█████▄ ▓█████▄▓██   ██▓    █     █░ ██▓ ███▄    █ ▓█████".red
-sleep(0.3)
-puts "▒██▀ ▀█  ▓██ ▒ ██▒ ██  ▓██▒▒██▀ ██▌▒██▀ ██▌▒██  ██▒   ▓█░ █ ░█░▓██▒ ██ ▀█   █ ▓█   ▀".red
-sleep(0.3)
-puts "▒▓█    ▄ ▓██ ░▄█ ▒▓██  ▒██░░██   █▌░██   █▌ ▒██ ██░   ▒█░ █ ░█ ▒██▒▓██  ▀█ ██▒▒███".red
-sleep(0.3)
-puts "▒▓▓▄ ▄██▒▒██▀▀█▄  ▓▓█  ░██░░▓█▄   ▌░▓█▄   ▌ ░ ▐██▓░   ░█░ █ ░█ ░██░▓██▒  ▐▌██▒▒▓█  ▄".red
-sleep(0.3)
-puts "▒ ▓███▀ ░░██▓ ▒██▒▒▒█████▓ ░▒████▓ ░▒████▓  ░ ██▒▓░   ░░██▒██▓ ░██░▒██░   ▓██░░▒████▒".red
-sleep(0.3)
-puts "░ ░▒ ▒  ░░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒  ▒▒▓  ▒  ▒▒▓  ▒   ██▒▒▒    ░ ▓░▒ ▒  ░▓  ░ ▒░   ▒ ▒ ░░ ▒░ ░".red
-sleep(0.3)
-puts "  ░  ▒     ░▒ ░ ▒░░░▒░ ░ ░  ░ ▒  ▒  ░ ▒  ▒ ▓██ ░▒░      ▒ ░ ░   ▒ ░░ ░░   ░ ▒░ ░ ░  ░".red
-sleep(0.3)
-puts "░          ░░   ░  ░░░ ░ ░  ░ ░  ░  ░ ░  ░ ▒ ▒ ░░       ░   ░   ▒ ░   ░   ░ ░    ░".red
-sleep(0.3)
-puts "░ ░         ░        ░        ░       ░    ░ ░            ░     ░           ░    ░  ░".red
-sleep(0.3)
-puts  "░                           ░       ░      ░ ░".red
+    sleep(0.3)
+    puts "██████╗██████╗ ██╗   ██╗██████╗ ██████╗ ██╗   ██╗    ██╗    ██╗██╗███╗   ██╗███████╗".red
+
+    sleep(0.3)
+    puts "██╔════╝██╔══██╗██║   ██║██╔══██╗██╔══██╗╚██╗ ██╔╝    ██║    ██║██║████╗  ██║██╔════╝".red
+
+    sleep(0.3)
+    puts "██║     ██████╔╝██║   ██║██║  ██║██║  ██║ ╚████╔╝     ██║ █╗ ██║██║██╔██╗ ██║█████╗ ".red
+
+    sleep(0.3)
+    puts "██║     ██╔══██╗██║   ██║██║  ██║██║  ██║  ╚██╔╝      ██║███╗██║██║██║╚██╗██║██╔══╝  ".red
+
+    sleep(0.3)
+    puts "╚██████╗██║  ██║╚██████╔╝██████╔╝██████╔╝   ██║       ╚███╔███╔╝██║██║ ╚████║███████╗".red
+
+    sleep(0.3)
+    puts "╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═════╝    ╚═╝        ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚══════╝".red
 
     # prompt.ask("What is your name?")
    puts "Welcome to the Cruddy Wine App!"
@@ -55,6 +59,7 @@ def first_menu
     current_user = User.create_user
 
 
+
     prompt = TTY::Prompt.new
     options = [
         {"My Reviews" => -> do current_user.retrieve_reviews end},
@@ -70,10 +75,10 @@ def first_menu
 end
 
 #------------------- Second Menu ----------------------#
-def second_menu(current_user)
+def second_menu(input_user, input_email)
 
-    current_user = self
 
+    current_user = User.find_by(name: input_user, email: input_email)
 
     prompt = TTY::Prompt.new
     options = [
